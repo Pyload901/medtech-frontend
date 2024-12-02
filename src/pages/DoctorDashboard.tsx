@@ -3,17 +3,14 @@ import medtechicon from '../assets/medtech.png';
 
 export const Dashboard: React.FC = () => {
   const menuItems = [
-    { icon: "📁", label: "My files" },
-    { icon: "📋", label: "Prescription" },
+    { icon: "📁", label: "my files" },
+    { icon: "📋", label: "Recetas" },
     { icon: "🔬", label: "X-Rays" },
-    { icon: "🧪", label: "Examinations" },
-    { icon: "👨🏻‍⚕️", label: "Doctors" },
-    { icon: "🏥", label: "Hospitals" },
+    { icon: "🧪", label: "Examenes" },
+    { icon: "👨🏻‍⚕️", label: "Doctores" },
+    { icon: "🏥", label: "Hospitales" },
     { icon: "🛡️", label: "Insurance" },
   ];
-  const handleUserFiles = (label: string) => {
-    
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,7 +55,6 @@ export const Dashboard: React.FC = () => {
               <button
                 key={item.label}
                 className="h-24 flex flex-col items-center justify-center space-y-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
-                onClick={()=>{handleUserFiles(item.label)}}
               >
                 <span className="text-2xl">{item.icon}</span>
                 <span className="text-sm capitalize">{item.label}</span>

@@ -15,16 +15,14 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
           <div className="grid gap-4">
             <div className="flex justify-around py-4">
               {[
-                { icon: "message-circle", label: "WhatsApp", color: "bg-green-500" },
-                { icon: "mail", label: "Email", color: "bg-blue-600" },
-                { icon: "message-circle", label: "Messenger", color: "bg-blue-500" },
-                { icon: "share-2", label: "Telegram", color: "bg-black" },
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-green-500" },
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-600" },
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-500" },
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-black" },
               ].map((item) => (
                 <button key={item.label} className="flex flex-col items-center gap-1">
                   <div className={`h-12 w-12 flex items-center justify-center rounded-full ${item.color} text-white`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                    </svg>
+                  <span className="text-2xl">{item.icon}</span>
                   </div>
                   <span className="text-xs">{item.label}</span>
                 </button>
