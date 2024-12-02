@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom';
 
 export const Appointments: React.FC = () => {
   const [birthdate, setBirthdate] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle login logic here
-   };
-
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
@@ -41,7 +35,7 @@ export const Appointments: React.FC = () => {
               />
         </div>
         <div className="p-4 bg-gray-100 rounded-lg shadow hover:bg-gray-200 cursor-pointer select-none">
-            <Link to="/hospital/appointments?id=1">
+            <Link to="/hospital/appointment">
                     <h2 className="text-sm text-gray-600 mb-2">Cita médica</h2>
                     <p className="text-md">Paciente: David</p>
                     <p className="text-md">Hora: 09:00 a.m.</p>
