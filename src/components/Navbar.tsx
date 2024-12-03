@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
         }
     }
     return(
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
+        <div className="sticky bottom-0 left-0 right-0 bg-white border-t">
             <div className="flex justify-around items-center h-16">
             <button className="flex flex-col items-center" onClick={()=>{handleNav('dashboard')}}>
                 <Compass className={`h-6 w-6 ${activeLink === 'dashboard'? 'text-blue-500':''}`} />

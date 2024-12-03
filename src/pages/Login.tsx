@@ -11,7 +11,7 @@ export const Login: React.FC = () => {
     e.preventDefault();
     // Handle login logic here
     if (email.includes("doctor"))
-      navigate('/hospital/appointments');
+      navigate('/doctor/dashboard');
     else
       navigate('/dashboard');
     console.log('Login submitted', { email, password });

@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import medtechicon from '../assets/medtech.png';
 
-export const Doctordashboard: React.FC = () => {
+export const Patienthealth: React.FC = () => {
   const menuItems = [
-    { icon: "👤", label: "My patients", path: "/patients" },
+    { icon: "📋", label: "Recetar", path: "/examenes" },
     { icon: "🔬", label: "X-Rays", path: "/xrays" },
     { icon: "🧪", label: "Examenes", path: "/addexams" },
+    { icon: "♥️", label: "last checkup", path: "/health" },
   ];
 
   return (
@@ -21,18 +22,11 @@ export const Doctordashboard: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-6">
-          {/* Appointment Card */}
-          <div className="p-4 bg-gray-100 rounded-lg">
-            <h2 className="text-sm text-gray-600">next appointment</h2>
-            <p className="text-lg font-semibold">13:28:00 June 21 2025</p>
-          </div>
 
-          {/* Next Patient Card */}
           <div className="p-4 bg-gray-100 rounded-lg">
-            <h2 className="text-sm text-gray-600 mb-2">Next patient</h2>
+            <h2 className="text-sm text-gray-600 mb-2">Patient</h2>
             <ul className="space-y-2">
               <li className="flex items-center">
                 <span className="mr-2">👤</span>
@@ -41,7 +35,6 @@ export const Doctordashboard: React.FC = () => {
             </ul>
           </div>
 
-          {/* Menu Grid */}
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
             {menuItems.map((item) => (
               <Link
