@@ -1,5 +1,7 @@
 import React from 'react';
+import { UserRoleProvider } from './context/UserRoleContext';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
@@ -8,23 +10,34 @@ import { Appointments } from './pages/Appointments';
 import { Appointment } from './pages/Appointment';
 import { HealthCheck } from './pages/Health';
 import { Doctordashboard } from './pages/DoctorDashboard';
-import { Navbar } from './components/Navbar'; 
+import { Navbar } from './components/PatientNavbar';
+import { DoctorNavbar } from './components/DoctorNavbar';
 import { Patients } from './pages/patients';
 import { Patienthealth } from './pages/patienthealth';
-import {Exams}  from './pages/exams';
+import { Exams } from './pages/Exams';
 import { AddExams } from './pages/Addexams';
-import {Xray} from './pages/Xray';
-import {Files} from './pages/Files';
-import {MedicationList} from './pages/Medicine';
-import {ExamsList} from './pages/Hospital';
-import {DoctorsHistory} from './pages/Doctors';
-import {HospitalsHistory} from './pages/HospitalList';
-import {InsuranceList}  from './pages/Insurance';
+import { Xray } from './pages/Xray';
+import { Files } from './pages/Files';
+import { MedicationList } from './pages/Medicine';
+import { ExamsList } from './pages/Hospital';
+import { DoctorsHistory } from './pages/Doctors';
+import { HospitalsHistory } from './pages/HospitalList';
+import { InsuranceList } from './pages/Insurance';
 
 const App: React.FC = () => {
   return (
+    <UserRoleProvider>
+      <Router>
+        <MainContent />
+      </Router>
+    </UserRoleProvider>
+  );
+};
+
+const MainContent: React.FC = () => {
+  const { userRole } = useUserRole();
+  return (
     <>
-    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -46,11 +59,23 @@ const App: React.FC = () => {
         <Route path="/hospitals" element={<HospitalsHistory />} />
         <Route path="/insurance" element={<InsuranceList />} />
       </Routes>
-      <Navbar />
-    </Router>
+
+      {/* Conditional Navbars */}
+      {userRole === 'patient' && <Navbar />}
+      {userRole === 'doctor' && <DoctorNavbar />}
     </>
   );
 };
 
-export default App;
+import { useContext } from 'react';
+import { UserRoleContext } from './context/UserRoleContext';
 
+const useUserRole = () => {
+  const context = useContext(UserRoleContext);
+  if (!context) {
+    throw new Error('useUserRole must be used within a UserRoleProvider');
+  }
+  return context;
+};
+
+export default App;

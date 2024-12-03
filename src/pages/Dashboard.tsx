@@ -1,6 +1,6 @@
+import { Header } from '@/components/Header';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import medtechicon from '../assets/medtech.png';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -22,15 +22,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="w-20 h-12 mb-4">
-              <img src={medtechicon} alt="Medtech" />
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

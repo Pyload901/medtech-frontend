@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import medtechicon from '../assets/medtech.png';
+import { Header } from '@/components/Header';
 
 export const Doctordashboard: React.FC = () => {
   const menuItems = [
@@ -11,15 +11,7 @@ export const Doctordashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="w-20 h-12 mb-4">
-              <img src={medtechicon} alt="Medtech" />
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

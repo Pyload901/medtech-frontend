@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserRoleContext } from '../context/UserRoleContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import medtechicon from '../assets/medtech.png';
 
 export const Login: React.FC = () => {
+  const { setUserRole } = useContext(UserRoleContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
-    if (email.includes("doctor"))
+    if (email.includes("doctor")) {
+      setUserRole('doctor')
       navigate('/doctor/dashboard');
-    else
+    }
+    else {
+      setUserRole('patient')
       navigate('/dashboard');
+    }
     console.log('Login submitted', { email, password });
   };
 

@@ -1,18 +1,11 @@
 import React from 'react';
 import { Heart, Bell, ShoppingBag, Pill } from 'lucide-react';
-import medtechicon from '../assets/medtech.png';
+import { Header } from '@/components/Header';
 export const HealthCheck: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white p-4 flex items-center gap-4">
-        <div className="flex justify-between items-center h-16">
-            <div className="w-20 h-12 mb-4">
-              <img src={medtechicon} alt='Medtech'/>
-            </div>
-          </div>
-        <h1 className="text-base">Health Check 28 October 2024</h1>
-      </header>
+    <Header />
 
       {/* Main Content */}
       <main className="p-4 space-y-4">
