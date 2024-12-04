@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const Files: React.FC = () => {
   const navigate = useNavigate();
   const [files, setFiles] = useState<{ name: string; date: string }[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('prescriptions');
   React.useEffect(() => {
     fetch(import.meta.env.VITE_API_URL + "/users/userfiles", {
       headers: {
@@ -15,10 +17,13 @@ export const Files: React.FC = () => {
         response.json().then((data) => {
           setFiles(data.files);
         });
+      } else {
+        toast.error('Error fetching files');
       }
     })
     .catch((error) => {
       console.error("Error fetching files:", error);
+      toast.error('Error fetching files');
     });
   }, []);
   const downloadFile = (name) => {
@@ -36,8 +41,15 @@ export const Files: React.FC = () => {
           a.download = name;
           a.click();
         });
+        toast.success('File downloaded successfully');
+      } else {
+        toast.error('Error downloading file');
       }
     })
+    .catch((error) => {
+      console.error("Error downloading file:", error);
+      toast.error('Error downloading file');
+    });
   }
   // const [files, setFiles] = useState([
   //   { name: "X-Ray_Chest_2023-12-01.pdf", date: "2023-12-01" },
@@ -57,11 +69,12 @@ export const Files: React.FC = () => {
         name: selectedFile.name,
         date: new Date().toISOString().split("T")[0], // Fecha actual en formato YYYY-MM-DD
       };
-      setFiles([...files, newFile]);
 
       // Subir archivo al servidor
       const formData = new FormData();
       formData.append("file", selectedFile);
+      formData.append("category", selectedCategory);
+
       fetch(import.meta.env.VITE_API_URL + "/users/uploadfile", {
         method: "POST",
         headers: {
@@ -69,14 +82,19 @@ export const Files: React.FC = () => {
         },
         body: formData,
       })
-        .then((response) => {
-          if (response.ok) {
-            console.log("File uploaded successfully");
-          }
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-        });
+      .then((response) => {
+        if (response.ok) {
+          setFiles([...files, newFile]);
+
+          toast.success('File uploaded successfully');
+        } else {
+          toast.error('Error uploading file');
+        }
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
+        toast.error('Error uploading file');
+      });
 
       setSelectedFile(null);
       setShowModal(false);
@@ -85,6 +103,7 @@ export const Files: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
+      <ToastContainer />
       {/* Header */}
       <header className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,11 +175,22 @@ export const Files: React.FC = () => {
                   onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Category</label>
+                <select 
+                  className="w-full p-2 border rounded" 
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  <option value="prescriptions">Prescription</option>
+                  <option value="xrays">X-Ray</option>
+                  <option value="examinations">Examination</option>
+                </select>
+              </div>
             </div>
             <div className="flex justify-end mt-4 space-x-2">
               <button
                 className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                onClick={() => setShowModal(false)}
+                onClick={() => {navigate(-1)}}
               >
                 Cancel
               </button>

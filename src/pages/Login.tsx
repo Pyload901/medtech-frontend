@@ -3,6 +3,8 @@ import { UserRoleContext } from '../context/UserRoleContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import medtechicon from '../assets/medtech.png';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Login: React.FC = () => {
   const { setUserRole } = useContext(UserRoleContext);
@@ -21,23 +23,32 @@ export const Login: React.FC = () => {
       })
       .then(response => response.json())
       .then(data => {
+        if (data.error) {
+          toast.error(data.error);
+          return;
+        }
         const { token, email } = data.user;
         localStorage.setItem('token', token);
-        if (email.includes("doctor")) {
-          setUserRole('doctor')
-          navigate('/doctor/dashboard');
-        } else {
-          setUserRole('patient')
-          navigate('/dashboard');
-        }
+        toast.success('Login successful');
+        setTimeout(() => {
+          if (email.includes("doctor")) {
+            setUserRole('doctor')
+            navigate('/doctor/dashboard');
+          } else {
+            setUserRole('patient')
+            navigate('/dashboard');
+          }
+        }, 1000);
       })
-      .catch((_) => {
-        console.log('Login failed');
+      .catch((err) => {
+        console.log(err)
+        toast.error('Login failed');
       });
   };
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
+      <ToastContainer />
       <div className="w-full max-w-md space-y-8">
       <div className="flex flex-col items-center justify-center">
           <div className="w-56 h-56 mb-4">

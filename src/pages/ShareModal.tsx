@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,23 +20,29 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
     })
     .then((response) => {
       if (response.ok) {
+        toast.success("Files shared successfully with " + doctor_email);
         console.log("Files shared successfully");
+      } else {
+        toast.error("Error sharing files");
+        console.error("Error sharing files");
       }
     })
     .catch((error) => {
+      toast.error("Error sharing files");
       console.error("Error sharing files:", error);
     });
   }
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+      <ToastContainer />
       <div className="bg-white rounded-lg max-w-md w-full">
         <div className="p-4">
           <div className="grid gap-4">
             <div className="flex justify-around py-4">
               {[
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-green-500", email:"doctor@gmail.com" },
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-600", email:"doctor@gmail.com"},
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-500", email:"doctor@gmail.com" },
+                { icon: "👨🏻‍⚕️", label: "Dr. Smith", color: "bg-green-500", email:"drsmith@gmail.com" },
+                { icon: "👨🏻‍⚕️", label: "Dr. Jackson", color: "bg-blue-600", email:"drjackson@gmail.com"},
+                { icon: "👨🏻‍⚕️", label: "Dr. Murphy", color: "bg-blue-500", email:"drmurphy@gmail.com" },
               ].map((item) => (
                 <button key={item.label} className="flex flex-col items-center gap-1" onClick={() => {shareFiles(item.email)}}>
                   <div className={`h-12 w-12 flex items-center justify-center rounded-full ${item.color} text-white`}>

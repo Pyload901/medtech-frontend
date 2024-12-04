@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import medtechicon from '../assets/medtech.png';
-import {ToastContainer, toast} from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,11 +23,16 @@ export const Register: React.FC = () => {
       body: JSON.stringify({ email, password, birthdate }),
     })
       .then(response => response.json())
-      .then(_ => {
-        toast('Registration successful');
-        navigate('/login')
+      .then(data => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          toast.success('Registration successful');
+          setTimeout(() => navigate('/login'), 1000);
+        }
       })
-      .catch((_) => {
+      .catch((err) => {
+        console.log(err)
         toast.error('Registration failed');
       });
   };
