@@ -40,9 +40,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
           <div className="grid gap-4">
             <div className="flex justify-around py-4">
               {[
-                { icon: "👨🏻‍⚕️", label: "Dr. Smith", color: "bg-green-500", email:"drsmith@gmail.com" },
-                { icon: "👨🏻‍⚕️", label: "Dr. Jackson", color: "bg-blue-600", email:"drjackson@gmail.com"},
-                { icon: "👨🏻‍⚕️", label: "Dr. Murphy", color: "bg-blue-500", email:"drmurphy@gmail.com" },
+                { icon: "👨🏻‍⚕️", label: "Dr. Smith", color: "bg-green-500", email:"doctorsmith@gmail.com" },
+                { icon: "👨🏻‍⚕️", label: "Dr. Jackson", color: "bg-blue-600", email:"doctorjackson@gmail.com"},
+                { icon: "👨🏻‍⚕️", label: "Dr. Murphy", color: "bg-blue-500", email:"doctormurphy@gmail.com" },
               ].map((item) => (
                 <button key={item.label} className="flex flex-col items-center gap-1" onClick={() => {shareFiles(item.email)}}>
                   <div className={`h-12 w-12 flex items-center justify-center rounded-full ${item.color} text-white`}>
