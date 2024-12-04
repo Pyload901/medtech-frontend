@@ -12,15 +12,28 @@ export const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
-    if (email.includes("doctor")) {
-      setUserRole('doctor')
-      navigate('/doctor/dashboard');
-    }
-    else {
-      setUserRole('patient')
-      navigate('/dashboard');
-    }
-    console.log('Login submitted', { email, password });
+    fetch(import.meta.env.VITE_API_URL + '/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+        body: JSON.stringify({ email, password }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        const { token, email } = data.user;
+        localStorage.setItem('token', token);
+        if (email.includes("doctor")) {
+          setUserRole('doctor')
+          navigate('/doctor/dashboard');
+        } else {
+          setUserRole('patient')
+          navigate('/dashboard');
+        }
+      })
+      .catch((_) => {
+        console.log('Login failed');
+      });
   };
 
   return (

@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import medtechicon from '../assets/medtech.png';
-
+import {ToastContainer, toast} from 'react-toastify';
 export const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
-
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle registration logic here
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
+    }
     console.log('Registration submitted', { email, password, confirmPassword, birthdate });
+    fetch(process.env.REACT_APP_API_URL + '/auth/register', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password, birthdate }),
+    })
+      .then(response => response.json())
+      .then(_ => {
+        toast('Registration successful');
+        navigate('/login')
+      })
+      .catch((_) => {
+        toast.error('Registration failed');
+      });
   };
 
   return (
@@ -98,6 +115,7 @@ export const Register: React.FC = () => {
           </Link>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

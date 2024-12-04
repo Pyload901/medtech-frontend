@@ -4,14 +4,29 @@ import medtechicon from '../assets/medtech.png';
 
 export const MedicationList: React.FC = () => {
   const navigate = useNavigate();
-
+  const [medicines, setMedicines] = useState([]);
+  React.useEffect(() => {
+    fetch(import.meta.env.VITE_API_URL + '/medications/self', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setMedicines(data);
+        });
+      }
+    }).catch((error) => {
+      console.error('Error fetching medications:', error);
+    });
+  }, []);
   // Lista de medicinas con horarios
-  const medicines = [
-    { name: "Acetaminophen", time: "Every 12 hours", dosage: "1 pill", id: 1 },
-    { name: "Tetracetina", time: "Every 8 hours", dosage: "2 pills", id: 2 },
-    { name: "Ibuprofen", time: "Every 6 hours", dosage: "1 pill", id: 3 },
-    { name: "Aspirin", time: "Once a day", dosage: "1 pill", id: 4 },
-  ];
+  // const medicines = [
+  //   { name: "Acetaminophen", time: "Every 12 hours", dosage: "1 pill", id: 1 },
+  //   { name: "Tetracetina", time: "Every 8 hours", dosage: "2 pills", id: 2 },
+  //   { name: "Ibuprofen", time: "Every 6 hours", dosage: "1 pill", id: 3 },
+  //   { name: "Aspirin", time: "Once a day", dosage: "1 pill", id: 4 },
+  // ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -36,7 +51,8 @@ export const MedicationList: React.FC = () => {
             {medicines.map((med) => (
               <div key={med.id} className="p-4 mb-4 bg-white shadow-md rounded-lg">
                 <h3 className="text-lg font-semibold text-gray-800">{med.name}</h3>
-                <p className="text-sm text-gray-600">{med.dosage} - {med.time}</p>
+                <p className="text-sm text-gray-600">{1} - {med.schedule}</p>
+                <p className="text-sm text-gray-600">{med.active === true ? 'Active' : 'Inactive'}</p>
               </div>
             ))}
           </div>

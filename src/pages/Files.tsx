@@ -3,13 +3,48 @@ import { useNavigate } from "react-router-dom";
 
 export const Files: React.FC = () => {
   const navigate = useNavigate();
-
-  const [files, setFiles] = useState([
-    { name: "X-Ray_Chest_2023-12-01.pdf", date: "2023-12-01" },
-    { name: "MRI_Brain_2023-11-20.pdf", date: "2023-11-20" },
-    { name: "Ultrasound_Abdomen_2023-10-15.pdf", date: "2023-10-15" },
-    { name: "CT_Scan_Lung_2023-09-10.pdf", date: "2023-09-10" },
-  ]);
+  const [files, setFiles] = useState<{ name: string; date: string }[]>([]);
+  React.useEffect(() => {
+    fetch(import.meta.env.VITE_API_URL + "/users/userfiles", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setFiles(data.files);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching files:", error);
+    });
+  }, []);
+  const downloadFile = (name) => {
+    fetch(import.meta.env.VITE_API_URL + "/users/uploads/" + name, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((response) => {
+      if (response.ok) {
+        response.blob().then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = name;
+          a.click();
+        });
+      }
+    })
+  }
+  // const [files, setFiles] = useState([
+  //   { name: "X-Ray_Chest_2023-12-01.pdf", date: "2023-12-01" },
+  //   { name: "MRI_Brain_2023-11-20.pdf", date: "2023-11-20" },
+  //   { name: "Ultrasound_Abdomen_2023-10-15.pdf", date: "2023-10-15" },
+  //   { name: "CT_Scan_Lung_2023-09-10.pdf", date: "2023-09-10" },
+  // ]);
 
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -23,6 +58,26 @@ export const Files: React.FC = () => {
         date: new Date().toISOString().split("T")[0], // Fecha actual en formato YYYY-MM-DD
       };
       setFiles([...files, newFile]);
+
+      // Subir archivo al servidor
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      fetch(import.meta.env.VITE_API_URL + "/users/uploadfile", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("File uploaded successfully");
+          }
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+        });
+
       setSelectedFile(null);
       setShowModal(false);
     }
@@ -57,7 +112,7 @@ export const Files: React.FC = () => {
                 </div>
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  onClick={() => alert(`Opening ${file.name}`)}
+                  onClick={()=>{downloadFile(file.name)}}
                 >
                   Open
                 </button>

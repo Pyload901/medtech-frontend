@@ -4,14 +4,31 @@ import medtechicon from '../assets/medtech.png';
 
 export const ExamsList: React.FC = () => {
   const navigate = useNavigate();
-
+  const [exams, setExams] = React.useState([]);
+  React.useEffect(() => {
+    fetch(import.meta.env.VITE_API_URL + '/examinations/self', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            setExams(data);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching exams:', error);
+      })
+  }, []);
   // Lista de exámenes con el hospital correspondiente
-  const exams = [
-    { name: "Blood Test", hospital: "City General Hospital", date: "Dec 10, 2024", id: 1 },
-    { name: "MRI Scan", hospital: "Metro Health Clinic", date: "Dec 12, 2024", id: 2 },
-    { name: "X-Ray", hospital: "Central Diagnostic Center", date: "Dec 14, 2024", id: 3 },
-    { name: "Ultrasound", hospital: "Green Valley Hospital", date: "Dec 15, 2024", id: 4 },
-  ];
+  // const exams = [
+  //   { name: "Blood Test", hospital: "City General Hospital", date: "Dec 10, 2024", id: 1 },
+  //   { name: "MRI Scan", hospital: "Metro Health Clinic", date: "Dec 12, 2024", id: 2 },
+  //   { name: "X-Ray", hospital: "Central Diagnostic Center", date: "Dec 14, 2024", id: 3 },
+  //   { name: "Ultrasound", hospital: "Green Valley Hospital", date: "Dec 15, 2024", id: 4 },
+  // ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -36,7 +53,7 @@ export const ExamsList: React.FC = () => {
             {exams.map((exam) => (
               <div key={exam.id} className="p-4 mb-4 bg-white shadow-md rounded-lg">
                 <h3 className="text-lg font-semibold text-gray-800">{exam.name}</h3>
-                <p className="text-sm text-gray-600">Hospital: {exam.hospital}</p>
+                {/* <p className="text-sm text-gray-600">Hospital: {exam.hospital}</p> */}
                 <p className="text-sm text-gray-600">Date: {exam.date}</p>
               </div>
             ))}

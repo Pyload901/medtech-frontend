@@ -19,7 +19,7 @@ import { AddExams } from './pages/Addexams';
 import { Xray } from './pages/Xray';
 import { Files } from './pages/Files';
 import { MedicationList } from './pages/Medicine';
-import { ExamsList } from './pages/Hospital';
+import { ExamsList } from './pages/ExamList';
 import { DoctorsHistory } from './pages/Doctors';
 import { HospitalsHistory } from './pages/HospitalList';
 import { InsuranceList } from './pages/Insurance';
