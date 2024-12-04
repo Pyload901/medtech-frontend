@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const Xray: React.FC = () => {
   const navigate = useNavigate();
@@ -75,8 +76,7 @@ export const Xray: React.FC = () => {
         name: selectedFile.name,
         date: new Date().toISOString().split("T")[0], // Fecha actual en formato YYYY-MM-DD
       };
-      setFiles([...files, newFile]);
-
+      
       // Subir archivo al servidor
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -88,15 +88,19 @@ export const Xray: React.FC = () => {
         },
         body: formData,
       })
-        .then((response) => {
-          if (response.ok) {
-            console.log("File uploaded successfully");
-          }
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-        });
-
+      .then((response) => {
+        if (response.ok) {
+          setFiles([...files, newFile]);
+          toast.success("File uploaded successfully");
+          console.log("File uploaded successfully");
+        } else {
+          toast.error("Error uploading file");
+        }
+      })
+      .catch((error) => {
+        toast.error("Error uploading file");
+        console.error("Error uploading file:", error);
+      });
       setSelectedFile(null);
       setShowModal(false);
     }
@@ -109,6 +113,7 @@ export const Xray: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
+      <ToastContainer />
       {/* Header */}
       <header className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

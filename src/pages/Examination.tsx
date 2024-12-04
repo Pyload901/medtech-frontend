@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const Examination: React.FC = () => {
   const navigate = useNavigate();
   const [files, setFiles] = useState<{ name: string; date: string }[]>([]);
@@ -77,8 +78,7 @@ export const Examination: React.FC = () => {
         name: selectedFile.name,
         date: new Date().toISOString().split("T")[0], // Fecha actual en formato YYYY-MM-DD
       };
-      setFiles([...files, newFile]);
-
+      
       // Subir archivo al servidor
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -90,13 +90,19 @@ export const Examination: React.FC = () => {
         },
         body: formData,
       })
-        .then((response) => {
+      .then((response) => {
           if (response.ok) {
+            setFiles([...files, newFile]);
             console.log("File uploaded successfully");
+            toast.success('File uploaded successfully');
+          } else {
+            console.error("Error uploading file");
+            toast.error('Error uploading file');
           }
         })
         .catch((error) => {
           console.error("Error uploading file:", error);
+          toast.error('Error uploading file');
         });
 
       setSelectedFile(null);
@@ -111,6 +117,7 @@ export const Examination: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
+      <ToastContainer />
       {/* Header */}
       <header className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
