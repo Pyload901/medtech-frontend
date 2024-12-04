@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export const Xray: React.FC = () => {
+export const Examination: React.FC = () => {
   const navigate = useNavigate();
   const [files, setFiles] = useState<{ name: string; date: string }[]>([]);
   
   const location = useLocation();
   const patient = location.state?.patient;
   const category = location.state?.category;
+
   const handleBack = () => {
     navigate(-1)
   }
+
   if (patient) {
     React.useEffect(() => {
       fetch(import.meta.env.VITE_API_URL + "/users/doctor/files?patient="+ patient + "&category=" + category, {
@@ -31,7 +33,7 @@ export const Xray: React.FC = () => {
     }, []);
   } else {
     React.useEffect(() => {
-      fetch(import.meta.env.VITE_API_URL + "/users/files?category=xrays", {
+      fetch(import.meta.env.VITE_API_URL + "/users/files?category=examinations", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -80,7 +82,7 @@ export const Xray: React.FC = () => {
       // Subir archivo al servidor
       const formData = new FormData();
       formData.append("file", selectedFile);
-      formData.append("category", "xrays");
+      formData.append("category", "examinations");
       fetch(import.meta.env.VITE_API_URL + "/users/uploadfile", {
         method: "POST",
         headers: {
@@ -113,7 +115,7 @@ export const Xray: React.FC = () => {
       <header className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <h1 className="text-lg font-bold">X-ray files</h1>
+            <h1 className="text-lg font-bold">Examination files</h1>
           </div>
         </div>
       </header>

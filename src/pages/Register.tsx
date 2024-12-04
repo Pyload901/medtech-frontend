@@ -13,8 +13,7 @@ export const Register: React.FC = () => {
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
     }
-    console.log('Registration submitted', { email, password, confirmPassword, birthdate });
-    fetch(process.env.REACT_APP_API_URL + '/auth/register', {
+    fetch(import.meta.env.VITE_API_URL + '/auth/register', {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json',

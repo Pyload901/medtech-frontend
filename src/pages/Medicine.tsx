@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import medtechicon from '../assets/medtech.png';
 
-export const MedicationList: React.FC = () => {
+export const Examination: React.FC = () => {
   const navigate = useNavigate();
   const [medicines, setMedicines] = useState([]);
   React.useEffect(() => {

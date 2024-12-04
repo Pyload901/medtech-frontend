@@ -5,8 +5,11 @@ import { Header } from '@/components/Header';
 export const Doctordashboard: React.FC = () => {
   const menuItems = [
     { icon: "👤", label: "My patients", path: "/patients" },
-    { icon: "🔬", label: "X-Rays", path: "/xrays" },
-    { icon: "🧪", label: "Examenes", path: "/addexams" },
+
+  ];
+  const filesItems = [
+    { icon: "🔬", label: "X-Rays", path: "/patients", category: "xrays" },
+    { icon: "🧪", label: "Examination", path: "/patients", category: "examination" },
   ];
 
   return (
@@ -40,6 +43,21 @@ export const Doctordashboard: React.FC = () => {
                 to={item.path}
                 key={item.label}
                 className="h-24 flex flex-col items-center justify-center space-y-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                state={{ category: item.category }}  // Pass category via state here
+              >
+                <span className="text-2xl">{item.icon}</span>
+                <span className="text-sm capitalize">{item.label}</span>
+              </Link>
+            ))}
+          </div>
+          <h2 className="text-xl font-semibold">Hospital files</h2>
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+            {filesItems.map((item) => (
+              <Link
+                to={item.path}
+                key={item.label}
+                className="h-24 flex flex-col items-center justify-center space-y-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                state={{ category: item.category }}  // Pass category via state here
               >
                 <span className="text-2xl">{item.icon}</span>
                 <span className="text-sm capitalize">{item.label}</span>

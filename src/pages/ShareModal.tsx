@@ -7,7 +7,25 @@ interface ShareModalProps {
 
 export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-
+  const shareFiles = (doctor_email) => {
+    console.log("Sharing files...");
+    fetch(import.meta.env.VITE_API_URL + "/users/share", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ doctor_email }),
+    })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Files shared successfully");
+      }
+    })
+    .catch((error) => {
+      console.error("Error sharing files:", error);
+    });
+  }
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-md w-full">
@@ -15,12 +33,11 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
           <div className="grid gap-4">
             <div className="flex justify-around py-4">
               {[
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-green-500" },
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-600" },
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-500" },
-                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-black" },
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-green-500", email:"doctor@gmail.com" },
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-600", email:"doctor@gmail.com"},
+                { icon: "👨🏻‍⚕️", label: "Dr", color: "bg-blue-500", email:"doctor@gmail.com" },
               ].map((item) => (
-                <button key={item.label} className="flex flex-col items-center gap-1">
+                <button key={item.label} className="flex flex-col items-center gap-1" onClick={() => {shareFiles(item.email)}}>
                   <div className={`h-12 w-12 flex items-center justify-center rounded-full ${item.color} text-white`}>
                   <span className="text-2xl">{item.icon}</span>
                   </div>

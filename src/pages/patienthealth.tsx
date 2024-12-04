@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import medtechicon from '../assets/medtech.png';
 
 export const Patienthealth: React.FC = () => {
+  const location = useLocation();
+  const patient = location.state?.patient;
   const menuItems = [
-    { icon: "📋", label: "Recetar", path: "/examenes" },
-    { icon: "🔬", label: "X-Rays", path: "/xrays" },
-    { icon: "🧪", label: "Examenes", path: "/addexams" },
-    { icon: "♥️", label: "last checkup", path: "/health" },
+    { icon: "📋", label: "Prescriptions", path: "/prescriptions", patient, category:"prescriptions" },
+    { icon: "🔬", label: "X-Rays", path: "/xrays", patient, category:"xrays" },
+    { icon: "🧪", label: "Examenes", path: "/addexams", patient, category: "examinations"},
+    { icon: "♥️", label: "last checkup", path: "/health", patient, category: "checkout"},
   ];
 
   return (
@@ -30,7 +32,7 @@ export const Patienthealth: React.FC = () => {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <span className="mr-2">👤</span>
-                <span>Ernesto Bricenio</span>
+                <span>{patient}</span>
               </li>
             </ul>
           </div>
@@ -40,6 +42,7 @@ export const Patienthealth: React.FC = () => {
               <Link
                 to={item.path}
                 key={item.label}
+                state={{category: item.category, patient: item.patient}}
                 className="h-24 flex flex-col items-center justify-center space-y-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
               >
                 <span className="text-2xl">{item.icon}</span>

@@ -14,12 +14,12 @@ import { Navbar } from './components/PatientNavbar';
 import { DoctorNavbar } from './components/DoctorNavbar';
 import { Patients } from './pages/patients';
 import { Patienthealth } from './pages/patienthealth';
-import { Exams } from './pages/Exams';
+import { Examination } from './pages/Examination';
 import { AddExams } from './pages/Addexams';
 import { Xray } from './pages/Xray';
 import { Files } from './pages/Files';
 import { MedicationList } from './pages/Medicine';
-import { ExamsList } from './pages/ExamList';
+import { Prescription } from './pages/Prescription';
 import { DoctorsHistory } from './pages/Doctors';
 import { HospitalsHistory } from './pages/HospitalList';
 import { InsuranceList } from './pages/Insurance';
@@ -49,12 +49,12 @@ const MainContent: React.FC = () => {
         <Route path="/doctor/dashboard" element={<Doctordashboard />} />
         <Route path="/patients" element={<Patients />} />
         <Route path="/patienthealth" element={<Patienthealth />} />
-        <Route path="/examenes" element={<Exams />} />
+        {/* <Route path="/prescriptions" element={<Exams />} /> */}
         <Route path="/addexams" element={<AddExams />} />
         <Route path="/xrays" element={<Xray />} />
         <Route path="/files" element={<Files />} />
-        <Route path="/medication" element={<MedicationList />} />
-        <Route path="/ExamsList" element={<ExamsList />} />
+        <Route path="/prescriptions" element={<Prescription />} />
+        <Route path="/examinations" element={<Examination />} />
         <Route path="/doctors" element={<DoctorsHistory />} />
         <Route path="/hospitals" element={<HospitalsHistory />} />
         <Route path="/insurance" element={<InsuranceList />} />

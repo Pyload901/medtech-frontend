@@ -7,9 +7,9 @@ export const Dashboard: React.FC = () => {
 
   const menuItems = [
     { icon: "📁", label: "My files", path: "/files" },
-    { icon: "📋", label: "Prescription", path: "/medication" },
+    { icon: "📋", label: "Prescriptions", path: "/prescriptions" },
     { icon: "🔬", label: "X-Rays", path: "/xrays" },
-    { icon: "🧪", label: "Examinations", path: "/ExamsList" },
+    { icon: "🧪", label: "Examinations", path: "/examinations" },
     { icon: "👨🏻‍⚕️", label: "Doctors", path: "/doctors" },
     { icon: "🏥", label: "Hospitals", path: "/hospitals" },
     { icon: "🛡️", label: "Insurance", path: "/insurance" },
