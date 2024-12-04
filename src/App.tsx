@@ -18,7 +18,6 @@ import { Examination } from './pages/Examination';
 import { AddExams } from './pages/Addexams';
 import { Xray } from './pages/Xray';
 import { Files } from './pages/Files';
-import { MedicationList } from './pages/Medicine';
 import { Prescription } from './pages/Prescription';
 import { DoctorsHistory } from './pages/Doctors';
 import { HospitalsHistory } from './pages/HospitalList';
