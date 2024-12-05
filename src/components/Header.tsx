@@ -8,7 +8,8 @@ export const Header: React.FC = () => {
   const navigate = useNavigate();
   const handleSignOut = () => {
     setUserRole('');
-    navigate('/')
+    localStorage.clear();
+    navigate('/');
   }
   return (
     <header className="bg-white border-b">
