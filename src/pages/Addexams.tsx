@@ -135,7 +135,7 @@ export const AddExams: React.FC = () => {
           <div className="flex justify-center mt-6">
             <button
               className="bg-black text-white py-2 px-4 rounded hover:bg-black"
-              onClick={() => navigate("/patienthealth")}
+              onClick={() => navigate(-1)}
             >
               Complete
             </button>

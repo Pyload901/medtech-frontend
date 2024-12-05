@@ -22,6 +22,7 @@ import { Prescription } from './pages/Prescription';
 import { DoctorsHistory } from './pages/Doctors';
 import { HospitalsHistory } from './pages/HospitalList';
 import { InsuranceList } from './pages/Insurance';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App: React.FC = () => {
   return (
@@ -39,24 +40,84 @@ const MainContent: React.FC = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/health" element={<HealthCheck />} />
-        <Route path="/hospital/appointments" element={<Appointments />} />
-        <Route path="/hospital/appointment" element={<Appointment />} />
-        <Route path="/doctor/dashboard" element={<Doctordashboard />} />
-        <Route path="/patients" element={<Patients />} />
-        <Route path="/patienthealth" element={<Patienthealth />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ ProtectedRoute>
+        } />
+        <Route path="/health" element={
+          <ProtectedRoute>
+            <HealthCheck />
+          </ ProtectedRoute>
+        } />
+        <Route path="/hospital/appointments" element={
+          <ProtectedRoute>
+            <Appointments />
+          </ ProtectedRoute>
+        } />
+        <Route path="/hospital/appointment" element={
+          <ProtectedRoute>
+            <Appointment />
+          </ProtectedRoute>
+        } />
+        <Route path="/doctor/dashboard" element={
+          <ProtectedRoute>
+            <Doctordashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/patients" element={
+          <ProtectedRoute>
+            <Patients />
+          </ProtectedRoute>
+        } />
+        <Route path="/patienthealth" element={
+          <ProtectedRoute>
+            <Patienthealth />
+          </ProtectedRoute>
+        } />
+        <Route path="/addexams" element={
+          <ProtectedRoute>
+            <AddExams />
+          </ProtectedRoute>
+        } />
+        <Route path="/xrays" element={
+          <ProtectedRoute>
+            <Xray />
+          </ProtectedRoute>
+        } />
+        <Route path="/files" element={
+          <ProtectedRoute>
+            <Files />
+          </ProtectedRoute>
+        } />
+        <Route path="/prescriptions" element={
+          <ProtectedRoute>
+            <Prescription />
+          </ProtectedRoute>
+        } />
+        <Route path="/examinations" element={
+          <ProtectedRoute>
+            <Examination />
+          </ProtectedRoute>
+        } />
+        <Route path="/doctors" element={
+          <ProtectedRoute>
+            <DoctorsHistory />
+          </ProtectedRoute>
+        } />
+        <Route path="/hospitals" element={
+          <ProtectedRoute>
+            <HospitalsHistory />
+          </ProtectedRoute>
+        } />
+        <Route path="/insurance" element={
+          <ProtectedRoute>
+            <InsuranceList />
+          </ProtectedRoute>
+        } />
         {/* <Route path="/prescriptions" element={<Exams />} /> */}
-        <Route path="/addexams" element={<AddExams />} />
-        <Route path="/xrays" element={<Xray />} />
-        <Route path="/files" element={<Files />} />
-        <Route path="/prescriptions" element={<Prescription />} />
-        <Route path="/examinations" element={<Examination />} />
-        <Route path="/doctors" element={<DoctorsHistory />} />
-        <Route path="/hospitals" element={<HospitalsHistory />} />
-        <Route path="/insurance" element={<InsuranceList />} />
       </Routes>
 
       {/* Conditional Navbars */}

@@ -133,25 +133,29 @@ export const Examination: React.FC = () => {
           <h2 className="text-xl font-semibold">Available Files</h2>
 
           {/* Lista de archivos */}
-          <ul className="space-y-4">
-            {sortedFiles.map((file, index) => (
-              <li
-                key={index}
-                className="p-4 bg-gray-100 rounded-lg flex justify-between items-center hover:bg-gray-200"
-              >
-                <div>
-                  <h3 className="font-medium text-gray-800">{file.name}</h3>
-                  <p className="text-sm text-gray-600">Uploaded: {file.date}</p>
-                </div>
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  onClick={() => {downloadFile(file.name)}}
+          {sortedFiles.length > 0 ? (
+            <ul className="space-y-4">
+              {sortedFiles.map((file, index) => (
+                <li
+                  key={index}
+                  className="p-4 bg-gray-100 rounded-lg flex justify-between items-center hover:bg-gray-200"
                 >
-                  Open
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <div>
+                    <h3 className="font-medium text-gray-800">{file.name}</h3>
+                    <p className="text-sm text-gray-600">Uploaded: {file.date}</p>
+                  </div>
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    onClick={() => {downloadFile(file.name)}}
+                  >
+                    Open
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-center text-gray-600">No files available</p>
+          )}
 
           {/* Botón centrado */}
           <div className="flex justify-center mt-6">
